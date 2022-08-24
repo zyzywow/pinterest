@@ -1,0 +1,45 @@
+<%- include("include/header");%>
+
+<main id="main">
+  <div id="contents">
+    <h2 class="title">DETAIL</h2>
+    <div class="detailPage">
+      <ul class="detailTable">
+        <li class="detailHead">
+          <span>Subject</span>
+          <span>Category</span>
+          <span>Date</span>
+          <span>Point</span>
+        </li>
+        <li class="detailBody">
+          <span><%= result.title%></span>
+          <span><%= result.category%></span>
+          <span><%= result.date%></span>
+          <span><%= result.point%></span>
+        </li>
+      </ul>
+      <div class="desc"><%= result.desc %></div>
+      <div class="img"><img src="<%= result.image %>" alt="<%= result.title %>" /></div>
+    </div>
+    <div class="btns">
+      <a href="/list" class="btn">목록</a>
+      <a href="/insert" class="btn">글쓰기</a>
+      <a href="/delete" class="btn" id="btnDelete" data-id="<%= result.id %>">삭제</a>
+    </div>
+  </div>
+</main>
+<script>
+  $("#btnDelete").on("click", function () {
+    $.ajax({ url: "/delete", data: { id: $(this).data("id") } }).done(function (response) {
+      // console.log(response);
+      if (response.isDelete) {
+        // $(location).attr("href", "list");
+        console.log("클라이언트에서 엘리먼트를 삭제해도 됨");
+        location.href = "/list";
+      } else {
+        console.log("클라이언트에서 엘리먼트를 삭제하면 안됨");
+      }
+    });
+  });
+</script>
+<%- include("include/footer");%>

@@ -1,0 +1,63 @@
+<%- include("include/header");%>
+<main id="main">
+  <form action="/register" method="POST" id="join" class="formBox" enctype="multipart/form-data">
+    <!-- enctype="multipart/form-data" - 첨부file전송할때필수!! -->
+    <div class="inputBox">
+      <label>
+        <span class="label">제목</span>
+        <input type="text" id="title" name="title" placeholder="제목을 입력하세요." />
+      </label>
+    </div>
+    <div class="inputBox">
+      <label>
+        <span class="label">날짜</span>
+        <input type="text" id="date" name="date" placeholder="날짜" />
+      </label>
+    </div>
+    <div class="inputBox">
+      <label>
+        <span class="label">카테고리</span>
+        <div>
+          <ul class="categoryList">
+            <li><span>photo</span><input type="checkbox" value="photo" name="category" /></li>
+            <li><span>paint</span><input type="checkbox" value="paint" name="category" /></li>
+            <li><span>sketch</span><input type="checkbox" value="sketch" name="category" /></li>
+          </ul>
+        </div>
+        <!-- <input type="text" id="genre" name="genre" placeholder="장르를 입력하세요." /> -->
+      </label>
+    </div>
+    <div class="inputBox">
+      <label>
+        <span class="label">내용</span>
+        <textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+      </label>
+    </div>
+    <div class="inputBox">
+      <label>
+        <span class="label">평점</span>
+        <input type="number" max="5" min="0" step="0.1" id="point" name="point" />
+      </label>
+    </div>
+    <div class="inputBox">
+      <label>
+        <span class="label">대표이미지</span>
+        <input type="file" name="image" id="image" />
+      </label>
+    </div>
+    <div class="btns">
+      <button id="btnJoin">확인</button>
+      <button type="reset" class="red"><a href="/" class="red02">취소</a></button>
+    </div>
+  </form>
+</main>
+<script>
+  const date = document.querySelector("#date");
+  const picker = new Lightpick({ field: date, format: "YYYY/MM/DD" });
+  $("#btnJoin").on("click", function () {
+    if (!confirm("등록 하시겠습니까 ?")) {
+      return false;
+    }
+  });
+</script>
+<%- include("include/footer");%>

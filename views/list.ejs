@@ -1,0 +1,60 @@
+<%- include("include/header");%>
+
+<main id="main">
+  <div id="contents">
+    <h2 class="title">LIST</h2>
+    <div class="table">
+      <div class="head">
+        <span style="width: 10%">NO</span>
+        <span>Subject</span>
+        <span style="width: 20%">Thumbnail</span>
+        <span style="width: 20%">Date</span>
+        <span style="width: 10%"><input type="checkbox" id="all" /></span>
+      </div>
+      <ul class="body">
+        <% list.forEach((item,idx)=> { %>
+        <li>
+          <div class="column"><%= (idx+1) %></div>
+          <div class="column subject"><a href="/detail/<%= item.id%>"><%= item.title%></a></div>
+          <div class="column"><img src="<%= item.image%>" alt="" class="thumbnail" /></div>
+          <div class="column"><%= item.date%></div>
+          <!-- <div class="column"><input type="checkbox" /></div> -->
+          <div class="column">
+            <button class="btnDelete" data-id="<%= item.id %>">삭제</button>
+          </div>
+        </li>
+        <% })%>
+      </ul>
+    </div>
+    <div class="btns">
+      <a href="/" class="btn">메인페이지</a>
+      <a href="/insert" class="btn">글쓰기</a>
+    </div>
+  </div>
+</main>
+<script>
+  $(".btnDelete").on("click", function () {
+    // console.log("a");
+    // console.log($(this).data("title"));
+    const parent = $(this).parents("li");
+    $.ajax({ url: "/delete", data: { id: $(this).data("id") } }).done(function (response) {
+      console.log(response);
+      if (response.isDelete) {
+        console.log("클라이언트에서 엘리먼트를 삭제해도 됨");
+        // gsap.to("")
+        // parent.remove();
+        gsap.to(parent, {
+          x: -2000,
+          ease: "power4.in",
+          onComplete: function () {
+            parent.remove();
+          },
+        });
+      } else {
+        console.log("클라이언트에서 엘리먼트를 삭제하면 안됨");
+      }
+    });
+  });
+</script>
+
+<%- include("include/footer");%>
